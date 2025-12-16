@@ -55,7 +55,7 @@ try{
       });
 
 
-      res.status(201).json({success:true,user:newUser});
+      res.status(201).json({success:true,user:newUser, token});
 
   }catch(error){
       console.error("Error during signup:", error);

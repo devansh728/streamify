@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import CallPage from "./pages/CallPage";
@@ -18,7 +18,7 @@ import useAuthUser from "./hooks/useAuthUser.js";
 
 const App=()=>{
   
-  const { data: authUser, isLoading } = useAuthUser();
+  const { authUser, isLoading } = useAuthUser();
   const isAuthenticated=Boolean(authUser);
   const isOnboarded=authUser?.isOnboarded;
 
@@ -36,9 +36,7 @@ if(isLoading)
           path="/"
           element={
             isAuthenticated && isOnboarded ? (
-              <Layout showSidebar={true}>
-                <HomePage />
-              </Layout>
+              <HomePage />
             ) : (
               <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
             )
@@ -60,9 +58,7 @@ if(isLoading)
           path="/notifications"
           element={
             isAuthenticated && isOnboarded ? (
-              <Layout showSidebar={true}>
-                <NotificationsPage />
-              </Layout>
+              <NotificationPage />
             ) : (
               <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
             )
@@ -83,9 +79,7 @@ if(isLoading)
           path="/chat/:id"
           element={
             isAuthenticated && isOnboarded ? (
-              <Layout showSidebar={false}>
-                <ChatPage />
-              </Layout>
+              <ChatPage />
             ) : (
               <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
             )

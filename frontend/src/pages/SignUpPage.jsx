@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ShipWheelIcon } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signup } from "../lib/api.js";
 //import useSignUp from "../hooks/useSignUp";
@@ -15,6 +15,8 @@ const SignUpPage = () => {
 
   //This is how we did it at first, without using our custom hook
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  
   const {
     mutate: signupMutation,
     isPending,
@@ -22,13 +24,13 @@ const SignUpPage = () => {
   } = useMutation({
     mutationFn: signup,
     onSuccess: () => {
-  queryClient.refetchQueries({ queryKey: ["authUser"] });
-  navigate("/onboarding");
-}
+      queryClient.refetchQueries({ queryKey: ["authUser"] });
+      navigate("/onboarding");
+    }
   });
 
   // This is how we did it using our custom hook - optimized version
- // const { isPending, error, signupMutation } = useSignUp();
+  // const { isPending, error, signupMutation } = useSignUp();
 
   const handleSignup = (e) => {
     e.preventDefault();
